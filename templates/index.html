@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age and Gender Prediction</title>
+    <style>
+        body, h1, p {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .prediction-info {
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #555;
+        }
+
+        .description {
+            font-size: 1.1em;
+            color: #777;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .btn-start {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-start:hover {
+            background-color: #45a049;
+        }
+
+        #videoContainer {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        #webcamVideo {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .age-gender-text {
+            font-size: 1.5em;
+            color: #fff;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Real-time Age and Gender Prediction</h1>
+
+        <p class="description">
+            This project uses a webcam to capture real-time images and predicts the age and gender of the person in the frame using DeepFace, a powerful deep learning model.
+            The application processes each video frame to display the predicted age and gender on the video feed. 
+            Click the "Start Prediction" button below to begin the real-time prediction.
+        </p>
+
+        <p class="prediction-info">Click the button below to start predicting age and gender.</p>
+
+        <button id="startPrediction" class="btn-start">Start Prediction</button>
+
+        <div id="videoContainer">
+            <img id="webcamVideo" src="" />
+        </div>
+    </div>
+
+    <script>
+        const startButton = document.getElementById('startPrediction');
+        const videoContainer = document.getElementById('videoContainer');
+        const webcamVideo = document.getElementById('webcamVideo');
+
+        startButton.addEventListener('click', function() {
+            startButton.style.display = 'none';
+            videoContainer.style.display = 'block';
+
+            webcamVideo.src = '/video_feed';
+        });
+    </script>
+
+</body>
+</html>
