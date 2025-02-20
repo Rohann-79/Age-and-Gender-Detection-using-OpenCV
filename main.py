@@ -1,6 +1,6 @@
 import cv2
 import time
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, jsonify, request
 import threading
 from collections import deque
 
@@ -69,7 +69,7 @@ def gen_frames():
         small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
 
         # Get faces and annotations
-        frameFace, bboxes = getFaceBox(faceNet, small_frame, conf_threshold=0.5)  # Lowered threshold
+        frameFace, bboxes = getFaceBox(faceNet, small_frame, conf_threshold=0.5)
 
         if not bboxes:
             continue
@@ -80,7 +80,7 @@ def gen_frames():
                                max(0, bbox[0] - padding):min(bbox[2] + padding, frame.shape[1] - 1)]
             
             # Resize the face region for consistency
-            face_resized = cv2.resize(face, (227, 227))  # Resize to model input size
+            face_resized = cv2.resize(face, (227, 227))  
             blob = cv2.dnn.blobFromImage(face_resized, 1.0, (227, 227), MODEL_MEAN_VALUES, swapRB=False)
 
             # Gender prediction
@@ -114,15 +114,15 @@ def gen_frames():
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
 
-# Home route
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Video feed route
+
 @app.route('/video_feed')
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)
